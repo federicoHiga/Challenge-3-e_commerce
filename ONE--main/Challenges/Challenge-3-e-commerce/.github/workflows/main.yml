@@ -16,7 +16,7 @@ steps:
         run: |
           # Agrega aquí cualquier comando de compilación necesario
           # Puedes usar "cp" para copiar el archivo index.html a la ubicación deseada
-          # seria "cp carpetaDelArchivo/archivo carpetaDondePegarArchivo" en este caso se ua . (punto) indicando q es en la carpeta actual
+          # seria "cp carpetaDelArchivo/archivo carpetaDondePegarArchivo" en este caso se usa . (punto) para indicar la carpeta raiz
           cp screens/index.html .
 
       - name: Deploy to GitHub Pages
