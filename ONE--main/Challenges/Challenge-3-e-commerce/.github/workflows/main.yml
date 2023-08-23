@@ -16,12 +16,12 @@ steps:
         run: |
           # Agrega aquí cualquier comando de compilación necesario
           # Puedes usar "cp" para copiar el archivo index.html a la ubicación deseada
-          # seria "cp carpetaDelArchivo/archivo carpetaDondePegarArchivo" en este caso se usa . (punto) para indicar la carpeta raiz
-          cp screens/index.html .
+          # seria "cp carpetaDelArchivo/archivo carpetaDondePegarArchivo" en este caso se usa . (punto) para indicar el directorio actual
+          cp screens/index.html ONE--main/Challenges/Challenge-3-e-commerce
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: . # Ruta relativa al directorio de trabajo actual
+          publish_dir: ONE--main/Challenges/Challenge-3-e-commerce # Ruta relativa al directorio de trabajo actual
         
