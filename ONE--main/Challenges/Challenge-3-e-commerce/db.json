@@ -1,0 +1,11 @@
+{
+  "product": [
+    {
+      "name": "Rocky",
+      "imgURL": "https://m.media-amazon.com/images/I/91oJXbCOoaL._AC_UF894,1000_QL80_.jpg",
+      "price": "55",
+      "id": "23efd68a-fba9-45fc-b767-93749fba95e2",
+      "categoria": "Movie"
+    }
+  ]
+}
