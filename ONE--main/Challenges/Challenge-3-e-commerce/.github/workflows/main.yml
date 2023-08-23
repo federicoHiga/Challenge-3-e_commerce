@@ -1,0 +1,25 @@
+name: main.yml
+on:
+  push:
+    branches:
+      - master  # Cambia esto a tu rama principal
+      
+jobs:
+  build:
+    runs-on: windows-latest
+    
+steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build and deploy
+        run: |
+        # No necesitas copiar nada aquí, ya que el archivo está en la carpeta correcta
+          
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ../screens/index.html #indicando donde se encuenra el index.html
+        
