@@ -1,0 +1,42 @@
+.personas{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.persona{
+    display: flex;
+    flex-direction: column;
+}
+
+.persona__img{
+    height: 300px;
+    width: 300px;
+    margin-top: 30px ;
+    border-radius: 100%;
+}
+
+.persona__img--roberta{
+    border-radius: 100%;
+}
+
+.persona__img--marcela{
+    border-radius: 100%;
+}
+
+.persona__img--andreia{
+    border-radius: 100%;
+}
+
+.persona__nombre{
+    font-family: Pacifico, cursive;
+    font-size: 30px;
+    color: red;
+    margin: 15px 0;
+}
+
+.persona__funcion{
+    color: grey;
+    font-size: 20px;
+    text-transform: lowercase;
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas width="600" height="400"></canvas>
+
+    <script>
+        var screen = document.querySelector("canvas");
+        var paint = screen.getContext("2d");
+
+        function printCuadrado (x,y,color){
+            var screen = document.querySelector("canvas");
+            var paint = screen.getContext("2d");
+            paint.fillStyle = color;
+            paint.fillRect(x,y,50,50);
+            paint.strokeStyle = "black";
+            paint.strokeRect(x,y,50,50);
+        }
+
+        for (var x = 0; x < 600; x = x + 50){
+            printCuadrado(x,0,"red");
+            printCuadrado(x,50,"yellow");
+            printCuadrado(x,100,"green");
+        }
+    
+        
+    </script>
+</body>
+</html>

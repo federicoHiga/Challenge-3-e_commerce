@@ -1,0 +1,31 @@
+.header__main{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 20px;
+    background-color: #f9f9f9;
+}
+
+.header__ul{
+    display: flex;
+    margin-right: 100px;
+}
+
+.header__li{
+    list-style: none;
+    margin-right: 15px;
+}
+
+.header__a{
+    text-decoration: none;
+    color: #808080;
+}
+
+.header__a:hover{
+    text-decoration: underline;
+}
+
+.header__a.inicio{
+    color: black;
+}
+

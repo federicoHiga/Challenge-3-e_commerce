@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logica 2</title>
+</head>
+
+<body>
+
+    <h2>Condicionales</h2>
+
+    <h3>Juego de azar y mujerzuelas</h3>
+    <input type="text" id="barra" placeholder="Introduce un numero">
+    <button>click me</button>
+
+    <script>
+
+        function saltarLinea() {
+            document.write("<br>");
+        }
+        function imprimir(frase) {
+            document.write(frase);
+            saltarLinea();
+        }
+        function separarEjercicio() {
+            imprimir("<br><hr><br><br>")
+        }
+        function usabilidad() {
+            input.value = ("");
+            input.focus();
+        }
+
+        //capturar valores de html 
+
+        // var input = document.querySelector ("input")
+
+        // function showText (){
+        //     alert(input.value);
+        //     usabilidad();
+        // }
+
+        // var button = document.querySelector ("button")
+        // button.onclick = showText;
+
+
+        //validacion edad
+
+        // var edad = parseInt(prompt("cual es tu edad?"))
+
+        // if (edad>=18){
+        //     imprimir("podes sacar la licencia")
+        // }else{
+        //     imprimir("todavia no podes sacar la licencia, pedazo de fachero")
+        // }
+
+        //juego azar
+
+        // separarEjercicio();
+
+        // var numeroRandom = (Math.round(Math.random()*10));
+        // var numeroJugador = parseInt(prompt("Adivina el numero campeon!.Es del 0 al 10"));
+
+        // if (numeroRandom==numeroJugador){
+        //     imprimir("Congrats!");
+        // }else{
+        //     imprimir("volve a intentarlo, el numero era "+numeroRandom);
+        // }
+
+        //numeros pares del 1 al 100
+
+        // separarEjercicio();
+
+        // var inicio = 2;
+
+        // while (inicio<=100){
+        //     imprimir(inicio);
+        //     inicio = inicio + 2;
+        // }
+
+        // imprimir("fin")
+
+        //Sys inicio de sesion
+
+        separarEjercicio();
+
+        // var usuarioRegistrado = "alura";
+        // var passwordRegistrado = "alura333";
+        // var intentos = 3;
+        // var contador = 1;
+
+        // while(contador<=intentos){
+        //    var usuarioIngresado = prompt("Ingrese su usuario");
+        //    var passwordIngresado = prompt("Ingrese su password");
+
+        //     if(usuarioRegistrado==usuarioIngresado && passwordRegistrado==passwordIngresado){
+        //         alert("Bienvenido " + usuarioRegistrado);
+        //         contador = intentos;
+        //     }else{
+        //         if(contador==3){
+        //             alert("Agotaste el numero de intentos, te enviaremos un mail");
+        //         }else{
+        //             alert("Usuario o password incorrecto, vuelve a intentarlo");
+        //         }
+        //     }
+        //      contador++
+        // }
+
+        //juego de azar v2
+
+        // separarEjercicio();
+        // document.getElementById("barra").focus();
+
+
+        // var randomNumber = (Math.round(Math.random()*10));
+        // var input = document.querySelector("input");
+
+        // document.write ("aca muestra el numero para porbar el codigo "+randomNumber);
+        // function bingo (){
+
+        //     if (randomNumber == parseInt(input.value)) {
+
+        //         alert("ACERTASTE MAQUINA SALVAJE");
+
+        //     }else{
+
+        //         alert("nada q ver pa, el numero era "+randomNumber);
+
+        //     }document.getElementById("barra").focus(); 
+        //      document.getElementById("barra").value=(""); 
+        // }
+
+        // var button = document.querySelector("button");
+        // button.onclick = bingo;
+
+
+        //1 me falto la parte de usabilidad, no me conecta el limpiar el input porq arriba esta definido
+        //con "" y le estoy metiendo numeros(creo q es eso). SOLUCIONADO: era porq el value al final del for tiene q ir con = 
+        //lo q no se es porq no me toma el 
+        //input.focus();. SOLUCION: conecte el input con un id. 
+
+
+        //juego de azar v3 con varias oportunidades. Suprime los nuemros repetidos, y genera varios intentos
+        //dentro de un array
+
+        document.getElementById("barra").focus();
+
+        function aleatorio() {
+            return Math.round(Math.random() * 10);
+        }
+
+        function sortear(cantidad) {
+            var randomNumber = [];
+            var contador = 1;
+
+            while (contador <= cantidad) {
+                var numeroAleatorio = aleatorio();
+                console.log(numeroAleatorio);
+                var encontrado = false;
+
+                if (numeroAleatorio != 0) {
+                    for (posicion = 0; posicion < randomNumber.length; posicion++) {
+                        if (numeroAleatorio == randomNumber[posicion]) {
+                            encontrado = true
+                            break;
+                        }
+                    } if (encontrado == false) {
+                        randomNumber.push(numeroAleatorio);
+                        contador++;
+                    }
+                }
+            }
+            return randomNumber
+        }
+
+        var randomNumber = sortear(4);
+        var input = document.querySelector("input");
+
+        document.write("aca muestra el numero para porbar el codigo " + randomNumber);
+        console.log(randomNumber);
+
+        function bingo() {
+            var acertar = false;
+            for (var posicion = 0; posicion < randomNumber.length; posicion++) {
+
+                if (parseInt(input.value) == randomNumber[posicion]) {
+
+                    alert("ACERTASTE MAQUINA SALVAJE, ERA EL " + randomNumber[posicion]);
+                    acertar = true;
+                    break;
+                }
+            } if (acertar == false) {
+                alert("nada q ver pa, el numero era " + randomNumber[posicion]);
+            }
+            document.getElementById("barra").focus();
+            document.getElementById("barra").value = ("");
+        }
+
+        var button = document.querySelector("button");
+        button.onclick = bingo;
+
+
+
+
+
+    </script>
+</body>
+
+</html>

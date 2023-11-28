@@ -1,0 +1,29 @@
+@media screen and (min-width:0) {
+    .footer__main{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer__ul{
+        display: flex;
+        margin-top: 35px;
+        padding: 0%;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .footer__p{
+        font-size: 30px;
+        display: flex;
+        color: gray;
+        margin: 0%;        
+    }
+
+    .footer__a{
+        margin: 0%;
+    }
+}
+
+@media screen and (min-width:768px) {
+    
+}

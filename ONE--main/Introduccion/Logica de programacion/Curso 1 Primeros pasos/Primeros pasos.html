@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logica 1</title>
+</head>
+<body>
+
+    <h3>¿Alcohol o gasolina?</h3>
+
+<script>
+
+    function saltarLinea() {
+
+        document.write("<br>");
+
+    }
+
+    function imprimir (frase) {
+
+        document.write ("<big>"+frase+"</big>");
+        saltarLinea();
+
+    }
+
+    function separarEjercicio(){
+
+        document.write("<br><br>"+"<hr>"+"<br>")
+
+    }
+
+//calculo consumo
+
+    var tanqueGasolinaLitros = 40; 
+    var recorridoKm = 480;
+
+    imprimir("La eficiencia de 40 litros de gasolina es de "+(recorridoKm/tanqueGasolinaLitros)+"Km");
+    
+    recorridoKm = 300;
+
+    imprimir("La eficiencia de 40 litros de alcohol es de "+(recorridoKm/tanqueGasolinaLitros)+"Km");
+
+//diferencia edades
+
+    separarEjercicio();
+
+    var miEdad = 27;
+    var edadHerron = 46;
+    var diferenciaEdades = (miEdad-edadHerron);
+
+    imprimir("La diferencia de edad entre Herron y yo es de "+diferenciaEdades);
+
+//
+
+    separarEjercicio();
+
+
+</script>
+    
+</body>
+</html>

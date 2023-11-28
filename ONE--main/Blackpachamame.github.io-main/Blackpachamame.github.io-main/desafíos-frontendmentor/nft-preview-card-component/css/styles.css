@@ -1,0 +1,194 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap");
+
+:root {
+  --fs: "Outfit", sans-serif;
+  --soft-blue: hsl(215, 51%, 70%);
+  --cyan: hsl(178, 100%, 50%);
+  --main-BG: hsl(217, 54%, 11%);
+  --card-BG: hsl(216, 50%, 16%);
+  --line: hsl(215, 32%, 27%);
+  --white: hsl(0, 0%, 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: var(--fs);
+  font-size: 1.8rem;
+  color: var(--soft-blue);
+  min-height: 100vh;
+  background-color: var(--main-BG);
+  display: grid;
+  place-content: center;
+}
+
+img,
+svg,
+figure {
+  display: block;
+}
+
+.main {
+  display: grid;
+  place-content: center;
+}
+
+.card {
+  width: 35rem;
+  height: 59.6rem;
+  margin: 10rem 0;
+  background-color: var(--card-BG);
+  border-radius: 1.5rem;
+  padding: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-box-shadow: 0px 25px 0px 20px rgb(12 23 41),
+    0px 25px 0px 60px rgb(12 23 41 / 10%);
+  box-shadow: 0px 25px 0px 20px rgb(12 23 41),
+    0px 25px 0px 60px rgb(12 23 41 / 10%);
+}
+
+.card__header {
+  width: 30.2rem;
+  height: 30.2rem;
+  border-radius: 1rem;
+  background-color: var(--cyan);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card__img {
+  width: 100%;
+}
+
+.card__icon-view {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.card__header:hover .card__icon-view {
+  opacity: 1;
+}
+
+.card__header:hover .card__img {
+  opacity: 0.5;
+}
+
+.card__body {
+  margin-top: 2.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.card__h1 {
+  font-size: 2.2rem;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.card__h1:hover {
+  color: var(--cyan);
+}
+
+.card__p {
+  margin-top: 1.7rem;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.card__info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  font-size: 1.6rem;
+}
+
+.info__ethereum {
+  color: var(--cyan);
+}
+
+.card__footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1.6rem;
+}
+
+.card__avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.3rem;
+  height: 3.3rem;
+  border-radius: 50%;
+  border: 1px solid var(--white);
+}
+
+.avatar__img {
+  width: 3.1rem;
+}
+
+.name__p {
+  margin-left: 1.5rem;
+  font-size: 1.6rem;
+}
+
+.name__span {
+  color: var(--white);
+  cursor: pointer;
+}
+
+.name__span:hover {
+  color: var(--cyan);
+}
+
+.info__ethereum,
+.info__clock {
+  display: flex;
+  align-items: center;
+}
+
+.ethereum__icon,
+.clock__icon {
+  margin-right: 0.7rem;
+}
+
+@media (max-width: 375px) {
+  .card {
+    width: 32.7rem;
+    height: 54.2rem;
+    background-color: var(--card-BG);
+    border-radius: 1.5rem;
+    padding: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card__header {
+    width: 27.8rem;
+  }
+
+  .card__p {
+    margin-top: 1.3rem;
+  }
+
+  .card__info {
+    margin-top: 2rem;
+    margin-bottom: 1.8rem;
+  }
+}

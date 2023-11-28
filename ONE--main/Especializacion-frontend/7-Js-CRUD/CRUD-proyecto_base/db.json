@@ -1,0 +1,29 @@
+{
+  "perfil": [
+    {
+      "nombre": "barco",
+      "email": "barco@gmail.com",
+      "id": "4333ac6e-189c-4d48-9e62-0e1d77f21267"
+    },
+    {
+      "nombre": "Federico",
+      "email": "higafederico@gmail.com",
+      "id": "6bda0ffc-ff61-49a1-ad5c-042055e836d2"
+    },
+    {
+      "nombre": "asdasdad",
+      "email": "asdad@gmail.com",
+      "id": "3a4c5995-e771-4cfe-9bd9-445f0d5b63f1"
+    },
+    {
+      "nombre": "asd",
+      "email": "higafederico@gmail.com",
+      "id": "d6820466-3c56-4d93-b2d7-e8bcafe4d86f"
+    },
+    {
+      "nombre": "edinson cavani",
+      "email": "eddi@gmail.com",
+      "id": "7707b689-6b7c-4989-8325-e5779da79806"
+    }
+  ]
+}

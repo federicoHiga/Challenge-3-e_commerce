@@ -1,0 +1,118 @@
+main{
+    background-color: aquamarine;
+    background-image: linear-gradient(35deg, rgb(0, 0, 108),aquamarine);
+    font-family: 'Indie Flower', cursive;
+}
+.caja1{
+    vertical-align: top;
+    display: inline-block; 
+    width: 50%;
+    margin: 20px 30px;
+}
+.fieldset1{
+    border:none;
+    margin: 20px 0 30px 260px;
+}
+.fieldset1 legend{
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(0, 0, 108);
+    /* font-family: "inter"; es la q usa en el figma*/
+    /* con js al legend darle un onclick para q de focus al textarea */
+}
+#mensaje{
+    display: block;
+    margin: 20px 0;
+    border:white;
+    outline: none;
+    resize: none;
+    border-radius: 15px;
+    transition: 400ms;
+}
+#mensaje:hover{
+    cursor: help;
+    box-shadow: 10px 10px 20px 10px;
+}
+.fieldset1 button{  
+    width: 150px;
+   margin: 0 45px 0 -35px;
+   padding: 10px;
+   border-radius: 50px;
+}
+.encriptar{
+    background-color: rgb(0, 0, 108);
+    color: white;
+    transition: 400ms;
+}
+.encriptar:hover{
+    box-shadow: 10px 10px 10px 0px;
+    color: black;
+    opacity: 90%;
+}
+.desencriptar{
+    transition: 400ms;
+}
+.desencriptar:hover{
+    box-shadow: 10px 10px 10px 0px;
+    opacity: 90%;
+}
+.caja2{
+    display: inline-block;
+    margin: 40px 0 0 120px;
+    width: 30%;
+}
+.frente img{
+    margin: 10px;
+}
+.dorso{
+    display: none;
+}
+.dorso legend{
+    margin-top: 55px;
+    margin-bottom: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(0, 0, 108);
+}
+.dorso textarea{
+    margin-bottom: 15px;
+    border:white;
+    outline: none;
+    resize: none;
+    border-radius: 15px;
+    transition: 400ms;
+}
+.dorso textarea:hover{
+    box-shadow: 10px 10px 20px 10px;
+    opacity: 90%;
+}
+.dorso button{
+   width: 150px;
+   margin: 0 5px 0 43px;
+   padding: 10px;
+   border-radius: 50px;
+   display: block;
+   transition: 400ms;
+}
+.dorso button:hover{
+    box-shadow: 10px 10px 10px 0px;
+    opacity: 90%;
+}
+footer{
+    background-color:rgb(0, 0, 108);
+    text-align: center;
+    height: 170px;
+}
+footer img{
+    border-radius: 50px;
+    width: 100px;
+    margin: 20px 0 10px 0;
+    transition: 400ms;
+}
+footer img:hover{
+    opacity: 70%;
+}
+footer p{
+    margin: 10px 0 15px 0;
+    color: white;
+}

@@ -1,0 +1,19 @@
+@media screen and (min-width:0) {
+    .banner__img{
+        height: 200px;
+    }
+    
+    .banner__h2{
+        font-size: 30px;
+    }
+}
+
+@media screen and (min-width:768px) {
+    .banner__img{
+        height: 400px;
+    }
+    
+    .banner__h2{
+        font-size: 50px;
+    }   
+}

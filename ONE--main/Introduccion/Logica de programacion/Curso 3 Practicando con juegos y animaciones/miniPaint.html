@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <canvas width="600" height="400"></canvas>
+
+    <script>
+
+        var pantalla = document.querySelector('canvas');
+        var pincel = pantalla.getContext('2d');
+
+
+        pincel.fillStyle = 'grey';
+        pincel.fillRect(0, 0, 600, 400);
+
+        var puedoDibujar = false;
+
+        //variables y functions para la paleta
+        var xRed = 0;
+        var xGreen = 50;
+        var xBlue = 100;
+        var yCuadrado = 0;
+        var tamanhoCuadrados = 50;
+        var colorActual = "blue"
+
+        function dibujarCuadrado(x, y, tamanho, color) {
+            pincel.fillStyle = color;
+            pincel.fillRect(x, y, tamanho, tamanho);
+            pincel.fill();
+        }
+
+        function dibujarPaleta() {
+            dibujarCuadrado(xRed, yCuadrado, tamanhoCuadrados, "red");
+            dibujarCuadrado(xGreen, yCuadrado, tamanhoCuadrados, "green");
+            dibujarCuadrado(xBlue, yCuadrado, tamanhoCuadrados, "blue");
+        }
+
+        //functions para pintar onclick y onmousemove + gatillos para habilitar y deshanilitar
+        function dibujarCirculo(x,y,colorActual) {
+
+            if (puedoDibujar) {
+
+                pincel.fillStyle = colorActual;
+                pincel.beginPath();
+                pincel.arc(x, y, 5, 0, 2 * 3.14);
+                pincel.fill();
+
+            }
+        }
+
+        pantalla.onmousemove = dibujarCirculo;
+
+        function habilitarDibujar() {
+
+            puedoDibujar = true;
+        }
+
+        function deshabilitarDibujar() {
+
+            puedoDibujar = false;
+        }
+
+        //Función para delimitar el área. el +5 es el radio del circulo del pincel.
+        function puedeDisenharArea(xCoordenada, yCoordenada) {
+
+            if ((xCoordenada >= 0 && (xCoordenada < (3 * tamanhoCuadrados + 5))) &&
+                (yCoordenada >= 0 && yCoordenada < (tamanhoCuadrados + 5))) {
+
+                return false;
+
+            } else {
+
+                return true;
+
+            }
+
+        }
+        //el pageX y pageY capturan las coordenadas mediante un event
+        function capturarMovimientoDelMouse(evento) {
+
+            var x = evento.pageX - pantalla.offsetLeft;
+            var y = evento.pageY - pantalla.offsetTop;
+
+            if (puedeDisenharArea(x, y)) {
+
+                dibujarCirculo(x,y,colorActual);
+
+            }
+
+        }
+
+        //function para cambiar color
+        function cambiarColor(evento){
+
+            var x = evento.pageX - pantalla.offsetLeft;
+            var y = evento.pageY - pantalla.offsetTop;
+
+            if (y >= yCuadrado && y <= (yCuadrado + tamanhoCuadrados)){
+
+                if(x >= xRed && x <= (xRed + tamanhoCuadrados)){
+                    colorActual = "red";
+                } 
+                else if(x >= xGreen && x <= (xGreen + tamanhoCuadrados)){
+                    colorActual = "green"
+                }
+                else if(x >= xBlue && x <= (xBlue + tamanhoCuadrados)){
+                    colorActual = "blue"
+                }
+            }
+
+
+        }
+
+        pantalla.onclick = cambiarColor;
+
+        pantalla.onmousemove = capturarMovimientoDelMouse;
+
+        pantalla.onmousedown = habilitarDibujar;
+
+        pantalla.onmouseup = deshabilitarDibujar;
+
+        dibujarPaleta(); 
+//falta la parte 2 de la logica para cambiar el color
+
+    </script>
+
+</body>
+
+</html>

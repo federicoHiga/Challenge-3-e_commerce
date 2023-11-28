@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Frontend Mentor | Intro component with sign up form</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <header class="header">
+      <h1 class="header__h1">Learn to code by watching others</h1>
+      <p class="header__p">See how experienced developers solve problems in real-time. Watching scripted tutorials is
+        great,
+        but understanding how developers think is invaluable. </p>
+    </header>
+
+    <main class="main">
+      <div class="main__free"><span class="span__free">Try it free 7 days</span> then $20/mo. thereafter</div>
+
+      <form class="form" action="#">
+        <input id="firstName" class="form__input" type="text" placeholder="First Name">
+        <span id="errorFirstName" class="form__errorFirstName">First Name cannot be empty</span>
+        <input id="lastName" class="form__input" type="text" placeholder="Last Name">
+        <span id="errorLasrName" class="form__errorLastName">Last Name cannot be empty</span>
+        <input id="email" class="form__input" type="email" placeholder="Email Address">
+        <span id="errorEmail" class="form__errorEmail">Looks like this is not an email</span>
+        <input id="password" class="form__input" type="password" placeholder="Password">
+        <span id="errorPass" class="form__errorPassword">Password cannot be empty</span>
+
+        <button class="form__button" type="submit">Claim your free trial</button>
+
+        <p class="form__p">By clicking the button, you are agreeing to our <span class="form__span">Terms and
+            Services</span></p>
+      </form>
+
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>

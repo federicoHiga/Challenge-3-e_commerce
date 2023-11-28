@@ -1,0 +1,179 @@
+                                        Documentacion de React
+
+*****************************************************************************************************************
+
+                TERMINAL 
+1) siempre para iniciar el proyecto en react hay q darle npm start a la carpeta contenedora. es como levantar el server de react, el App.js (el main index digamos) se levanta en un locla host
+
+2) para terminar el proyecto en la terminal es un ctrl + c y te va a prugtunar si queres terminarlo
+
+3) una vez terminado el proyecto se ejecuta el comando "npm run build" en la carpeta main. Esto es poner en "produccion"
+        a) react optimiza todo el proyecto y crea la carpeta "build" q contiene todo el codigo en diferetes archivos pero en una sola linea. De seguir editando el codigo se hace todo desde la carpeta src y nuestros componentes y se vuelve a genrerar una carpeta build. Esta es la q se debe publicar/deployar contiene el index.html
+        b) el index optimizado no es posible abrirlo de una con el navegador, es necesario un servidor. A nivel local se installa de manera global (una sola vez) con el comando "npm install -g serve" y con "serve -s build" el server nos levanta un localhost. A nivel internet el server es proporcionado por muchas paginas/empresas como "vercel", "netlify" o mismo github
+                b-1) paso a paso subir en github: 
+                        .)ir a github y a nuevo repo 
+                        .)copiar el comando q te genera en especifico algo parecido a esto: "git remote add origin https://github.com/federicoHiga/React_1.git" y lo pegas en la terminal de la carpeta main
+                        .)ahi ya vinculaste el repo con tu proyecto de ahi en mas es:
+                        .)git status para ver si hay cambios
+                        .)git add . para agregar todo
+                        .)git commit -m "mesnaje" para "guardar"
+                        .)git push origin master para subir
+        c)una vez subido a github nos vamos a Vercel importamos el repo de github, le damos a deploy y nos va a generar 3 urls. 
+                DEPLOYMENT: esta url va a ir cambiando a medida q actualizamos el repo
+                DOMAINS: aca genera dos urls, la primera es la de nuestro proyecto como tal, es la q se comparte como url principal a todo el mundo
+                                       
+*****************************************************************************************************************
+
+                COMPONENTS
+con react la teca es, asi como en el atom desing, separar el codigo lo mas posible. Estas separaciones son los componentes de React, q pueden ser cualquier elemento simple del DOM hasta porciones de codigos como un header entero. Se definene los componentes y se puede madnar a llamar reutilizando mucho codigo. Las buenas practicas mandan a declarar los components con mayusculas para distinguirlas de las tags del DOM real
+
+        PROPS 
+los componentes reciben como parametro las props, son un objeto con las propiedades del componente q se declaran el la call de components pero q puede ser modificadas en la function del componente. props.texto, props.placeholder etc:
+
+declaracion:
+const CampoTexto = (props)=>{
+
+    const palceholderModificado = `${props.placeholder}...`
+
+    return <div className="campo-texto">
+        <label>{props.titulo}</label>
+        <input placeholder={palceholderModificado}/>
+    </div>
+}
+
+CALL:
+<CampoTexto titulo="Nombre" placeholder="Ingrese el nombre" />
+
+ademas para ahorrar lineas se puede utilizar el props.children. cuando hacemos la llamada del componente podemos hacerlo de la sigiente manera
+CALL:
+        <Boton>
+            Crear <-- children
+            <img> <-- children
+            <input> <-- children
+        </Boton>
+
+*****************************************************************************************************************
+
+                LLAMADA DE COMPONENTES
+una vez separado el codigo en distintos archivos .js o .jsx con una function q returna codigo html en el archivo central de javascript (el q va a llamar todas los componentes, viene siendo nuestro index.html pero q maneja DOM virtual comunmente denomidado App.js) se importan todos los componentes 
+
+en la lamdad declaramos las props de manera externa
+
+*****************************************************************************************************************
+
+                ESTRUCTURA DEL PROYECTO
+la estructura se divide en lo grueso en dos partes el DOM Real=/public y el DOM Virtual=/src
+
+/public: index.html, /img
+/src: App.js, App.css, /components (dentro de components se crea una carpeta para cada componente, es decir una para Header, otr apara Form y asi, en cada carpeta va su .js y el respectivo .css, al .js las buenas practicas dicen q se lo nombra como "index.js" ya q de esta manera cuando exportamos e importamos el vsc linkea por defecto siemre el index)
+
+        CALLS
+{Header()}
+<Header></Header>
+<Header />
+
+*****************************************************************************************************************
+
+                ARCHIVOS
+react labura con archivos .js y .jsx. Son parecidos jsx permite mediante functions utilizar lenguaje html (con templates) y codigo js ejecutado entre {}. Podes llmar una funcion declarada por fuera
+
+*****************************************************************************************************************
+
+                DEBUG
+darele console.log a cualquier cosa q no te cierre, desde un import, hasta un parametro.
+
+                SPA = Single Page Application
+otra teca de react es q busca manejar todo en un solo index.html digamos, y ademas trata de no refrescar la pagina. entonces es clave el e.preventDefault() para todos los forms y estrucutar q refrescan la pagina con algun event
+
+*****************************************************************************************************************
+
+                ESTATES HOOK
+para declarar variables como let, const, var, aca se usa el termino estate/estado. el estado actual de esta variable es: un string, un booleano, un numero. la estructura es la siguinete:
+
+import {useState} from "react" //esto porq es una funcion nativa de react entonces la importamos
+
+const [nombreEstado, funcionActualizarEstado] = useState("estadoInicial") //"estado" podria ser "true", "3" etc y asi es como se mantiene ese estado hasta q lo modifiquemos. la manera de modificarlo seria declarando y utilizando la "funcionActualizarEstado".
+
+        SWITCH
+el useState() se puede utilizar a modod de switch/interruptor primero declaradno el estado inicial como true y despues onClick cambiarlo a false
+
+*****************************************************************************************************************
+
+                TERNARIO/REACT IF ELSE
+1) {mostrarForm === true ? <Form /> : <div></div>} 
+condicion (?=entonces) esto (:=sino) esto
+
+2) {mostrarForm ? <Form /> : <></>} 
+                        manda una etiqueta vacia
+
+3) {mostrarForm && <Form />}
+seria un if sin el esle
+
+*****************************************************************************************************************
+
+                .MAP()
+es el forEach de react para recorrer arrays. estructura: (en este caso un array de objetos)
+
+        ARRAY DE OBJETOS
+const arrayJugadores = [
+        {
+                nombre:"Colo barco",
+                posicion:"extremo",
+        },
+        {
+                nombre:"Cavani",
+                posicion:"9",
+        },
+]
+
+        RECORRIENDO EL ARRAY
+{
+        arrayJugadores.map((variableATuGusto)=>{
+                conosle.log(variableATuGusto)
+                return <ComponenteFutbolista datos={variableATuGusto} key={variableATuGusto.nombre} />
+})
+}
+
+* "variableATuGusto" automaticamente guarda cada objeto del arrayJugadores, definiendo cualquier variable en la arrow del .map() va a contener cada objeto
+
+* "datos={variableATuGusto}" es una prop q definimos ahi mismo y q despues debemos pasar en el componente <ComponenteFutbolista /> 
+
+*key={variableATuGusto.nombre} la funcion .map() necesita q por acada componente q se va a generar le pasemos una key (es igual a un id) para ello podemos utilizar los mismos datos q estamos recorriendo por eso definimos variableATuGusto.nombre. Otro sistema es utilizar la estructura q por fedecto tiene .map(). Admite dos parametros uno para guarar los datos de cada recorrido y otro q hace de "i" la cual se va iterando y nos permite usarla como key de esta manera:
+
+                array.map(variableConDatos, index) <ComponenteFutbolista datos={variableConDatos} key={index} />
+
+*****************************************************************************************************************
+
+                CENTRALIZAR LOS DATOS 
+tenemos la siguiente estrucutra:
+
+                                APP  componente padre
+     componentes hijos                            |
+ HEADER     FORM     MIORG            EQUIPO
+                                        |
+                                    COLABORADOR 
+                
+para centralizar los datos la idea es q la info se encuentre en el componente padre, y a partir de ahi los componentes q vayan capturando mas datos vuelvan al APP para q de ahi se esparzan a los hijos. Para eso necesitamos tener el estado de los componentes q capturan info asi APP reactiona y los pueda recibir
+
+*****************************************************************************************************************
+
+                LOCAL STORAGE, SESSION STORAGE
+para poder dejar permanente los cambios q hacemos en react, todos los componentes q creamos en tiempo real con el form debemos almacenarlos en el localstorage o en sessionstorage
+
+https://es.javascript.info/localstorage
+
+*****************************************************************************************************************
+
+                REACT ICONS
+1) se ejecuta en la terminal del proyecto npm i react-icons, para instalar el paquete
+2) en la pag de react icons buscamos los icons y nos servimos
+3) hay q hacer el import en la jsx q vamos a usar : import {nombreDelIcono} from "react-icon/ai" (ruta donde se instalo el paquete /node_modules)
+
+https://react-icons.github.io/react-icons/
+
+*****************************************************************************************************************
+
+                HEX TO RGBA
+1) otra libreria la cual cambia el color de hexadecimal a rgba y le cambia la opasidad (mas o menos clarito)
+2) se instala npm i hex-to-rgba 
+3) https://www.npmjs.com/package/hex-to-rgba (functions y documentacion)

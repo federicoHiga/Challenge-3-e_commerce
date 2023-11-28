@@ -1,0 +1,19 @@
+.quienes{
+    padding: 50px;
+    text-align: center;
+}
+
+.quienes__h3{
+    color: red;
+    font-family: Pacifico, cursive;
+    font-size: 50px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.quienes__p{
+    color: gray;
+    font-size: 30px;
+    font-weight: 100;
+}
+

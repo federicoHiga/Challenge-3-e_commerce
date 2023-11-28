@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <canvas width="600" height="400"></canvas>
+
+    <script>
+
+        var pantalla = document.querySelector("canvas");
+        var pincel = pantalla.getContext("2d");
+
+        pincel.fillStyle = "grey";
+        pincel.fillRect(0, 0, 600, 400);
+
+        function dibujarCirculo(x, y, radio, color) {
+
+            pincel.fillStyle = color;
+            pincel.beginPath();
+            pincel.arc(x, y, radio, 0, 2 * Math.PI);
+            pincel.fill();
+
+        }
+
+        function limpiarPantalla() {
+
+            pincel.clearRect(0, 0, 600, 400);
+        }
+
+        var radio = 10;
+        var xRandom;
+        var yRandom;
+        var x = 0;
+
+        function objetivo (x,y){
+
+            dibujarCirculo(x,y,radio + 20,"red");
+            dibujarCirculo(x,y,radio + 10,"white");
+            dibujarCirculo(x,y,radio,"red");
+
+        }
+
+        function objetivoRandom (maximo){
+
+            return Math.floor(Math.random()*maximo);
+        }
+
+        function actualizarPantalla (){
+
+            limpiarPantalla();
+            xRandom = objetivoRandom (570);
+            yRandom = objetivoRandom (370);
+            objetivo (xRandom,yRandom);
+            x++;
+
+        }
+        
+        setInterval(actualizarPantalla,1000);
+        
+        function disparar (evento){
+
+            var x = evento.pageX - pantalla.offsetLeft;
+            var y = evento.pageY - pantalla.offsetTop;
+
+            if ((x < xRandom + radio)&&
+                (x > xRandom - radio)&&
+                (y < yRandom + radio)&&
+                (y > yRandom - radio))
+                alert ("donde pones el ojo pones el click, maquinon bestial!");
+        }
+
+        pantalla.onclick = disparar;
+        
+
+    </script>
+
+</body>
+
+</html>

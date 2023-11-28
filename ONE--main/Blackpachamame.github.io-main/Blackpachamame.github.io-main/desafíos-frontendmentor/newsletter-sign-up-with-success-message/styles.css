@@ -1,0 +1,243 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+:root {
+  --font-family: "Roboto", sans-serif;
+  --tomato: hsl(4, 100%, 67%);
+  --tomato-background: hsla(4, 100%, 67%, 0.17);
+  --dark-slate-grey: hsl(234, 29%, 20%);
+  --charcoal-grey: hsl(235, 18%, 26%);
+  --grey: hsl(231, 7%, 60%);
+  --white: hsl(0, 0%, 100%);
+  --gradient-button: linear-gradient(
+    90deg,
+    rgba(255, 83, 123, 1) 0%,
+    rgba(254, 104, 67, 1) 100%
+  );
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--charcoal-grey);
+  background-color: var(--charcoal-grey);
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+}
+
+img,
+svg,
+figure {
+  display: block;
+}
+
+button {
+  position: relative;
+  width: 100%;
+  height: 5.6rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--white);
+  background-color: var(--dark-slate-grey);
+  border: none;
+  border-radius: 0.8rem;
+  cursor: pointer;
+}
+button:hover {
+  background: var(--gradient-button);
+  z-index: 0;
+}
+button:hover::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--gradient-button);
+  transform: translate3d(0px, 10px, 0) scale(0.95);
+  filter: blur(20px);
+  opacity: var(0.7);
+  transition: opacity 0.3s;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.form__h1,
+.message__h2 {
+  font-size: 5.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 2.5rem;
+}
+
+/* MAIN-FORM */
+.main {
+  background-color: var(--white);
+  border-radius: 3rem;
+  display: grid;
+  grid-template-columns: 928px;
+  grid-template-rows: 641px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 480px 448px;
+  grid-template-rows: 641px;
+  align-items: center;
+}
+
+.form__figure--mobile {
+  display: none;
+}
+.form__figure--desktop {
+  padding: 2.4rem;
+}
+.form__illustration {
+  width: 100%;
+}
+
+.form__container {
+  padding-left: 6.4rem;
+  padding-right: 4rem;
+}
+
+.form__p {
+  margin-bottom: 2.3rem;
+}
+
+.form__ul .form__li {
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.4rem;
+}
+.form__ul .form__li::before {
+  content: url(assets/images/icon-list.svg);
+  margin-right: 1.5rem;
+  margin-top: 0.2rem;
+}
+
+.form__label {
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.7rem;
+  margin-top: 2.8rem;
+}
+/* MENSAJE-ERROR */
+.form__label span.error {
+  display: none;
+  float: right;
+  color: var(--tomato);
+}
+
+.form__input {
+  width: 100%;
+  height: 5.6rem;
+  font-size: 1.6rem;
+  border: 1px solid var(--grey);
+  border-radius: 0.8rem;
+  padding: 2rem;
+  margin-bottom: 2.4rem;
+}
+.form__input::placeholder {
+  color: var(--grey);
+}
+
+/* FORM INVALID */
+.form__input.invalid {
+  color: var(--tomato);
+  background-color: var(--tomato-background);
+  border: 1px solid var(--tomato);
+}
+.form__input.invalid::placeholder {
+  color: var(--tomato);
+}
+
+/* SECTION-MESSAGE */
+.message {
+  display: none;
+  background-color: var(--white);
+  /* display: grid; */
+  grid-template-columns: 504px;
+  grid-template-rows: 520px;
+  -webkit-box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 3rem;
+}
+.message__container {
+  margin-top: 0;
+  padding: 4.8rem 6.4rem 6.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.message__success {
+  width: 6.4rem;
+}
+.message__success {
+  margin-bottom: 4rem;
+}
+.message__user--email {
+  font-weight: 700;
+}
+
+@media (max-width: 928px) {
+  .form__h1 {
+    font-size: 4rem;
+    margin-bottom: 2.3rem;
+  }
+  .message__h2 {
+    font-size: 4rem;
+    margin-bottom: 3rem;
+  }
+
+  /* MAIN-FORM */
+  .main,
+  .form,
+  .message {
+    max-width: 375px;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    border-radius: 0;
+  }
+  .form__figure--mobile {
+    display: block;
+  }
+  .form__figure--desktop {
+    display: none;
+  }
+  .form__container,
+  .message__container {
+    padding: 4rem 2.5rem;
+  }
+  .form__ul .form__li {
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .form__label {
+    margin-top: 3.4rem;
+  }
+
+  /* SECTION-MESSAGE */
+  .message__container {
+    margin-top: 11rem;
+  }
+  .message__button {
+    margin-top: 25rem;
+  }
+}

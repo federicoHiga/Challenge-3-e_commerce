@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptador de texto</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body>
+    <main>
+        <div class="caja1">
+            <h1>
+                <a href="https://app.aluracursos.com/dashboard"><img class="img-logo" src="imgs/Logo.png" alt="logo"></a>
+            </h1>
+            <fieldset class="fieldset1">
+                <legend>Escribe tu secreto aqui</legend>
+                <textarea name="Introduce tu mensaje" id="mensaje" cols="30" rows="22" placeholder="Por favor no utiliar numeros o caracteres especiales"></textarea>
+                <button onclick="triggerEncriptar()" class="encriptar">Encriptar</button>
+                <button onclick="triggerDesencriptar()" class="desencriptar">Desencrpitar</button>
+            </fieldset>
+        </div> 
+        <div class="caja2">
+            <div id="frente" class="frente">
+                <img src="imgs/Muñeco.png" alt="Muñeco">
+                <img src="imgs/Frame 5.png" alt="texto no encontrado">
+            </div>
+            <div id="dorso" class="dorso">
+                <legend>Tu mensaje encriptado</legend>
+                <textarea name="output" id="output" cols="30" rows="22"></textarea>
+                <button onclick="copiar()" class="copiar">Copiar</button>
+            </div>  
+        </div>
+    </main>
+    <footer>
+        <a href="https://app.aluracursos.com/user/higafederico"><img class="miPerfil" src="imgs/avatar_f.webp" alt="avatar" ></a>
+        <p>Mi perfil</p>
+    </footer>
+    <script src="js.js"></script>
+</body>
+</html>

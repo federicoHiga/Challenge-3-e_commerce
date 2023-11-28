@@ -1,0 +1,715 @@
+                                        INDICE DEL CURSO
+
+                                     GUIA CHETA PARA FORMS
+
+A) TERMINAL
+B) CLASS COMPONENTS
+C) COMPONENTE CONTROLADO Y SIN CONTROLAR
+D) <STEPPER />
+E) OPERADOR TERNARIO / &&
+F) VALIDACIONES DE INPUTS
+G) REFACTORIZANDO INPUTS 
+H) USSEEFFECT (A FONDO)
+I) CONTEXT (LIBRERIA DE MANEJO DE DATOS)
+J) JWT - JASON WEB TOKEN
+K) CUSTOM HOOKS
+L) FORMS LIBRERIAS
+M) REDUX (LIBRERIA DE MANEJO DE DATOS)
+
+*********************************************************************************************************************
+
+A)                                           TERMINAL
+
+
+
+*********************************************************************************************************************
+
+
+B)                                      CLASS COMPONENTS
+
+No se detien a explicar mucho de los class. El propio react desestima ya su uso, en proyectos anteriores a 2019 aprox es probable enconctrarlos asiq hay q saber migrar a functional components
+
+1) estructura para poder declarar un estado:
+
+import React from "react";
+
+class DatosUsuario extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state = { //estate
+        email: {
+            value:"",
+            valid:true,
+        },
+        password: {
+            value:"",
+            valid:true,
+        }
+        }
+    }
+}
+2) conectar input con states, la f setState ya viene interna, solo se llama no se declara:
+
+render(){
+    return(
+        <Box>
+            props
+            props
+        </Box>
+        <TextField> //input de email
+            props
+            props
+            value={this.state.email.value} //vinculo con el state inicial email
+            onChange={(e)=> this.setState( {email:{ value: e.target.value }})} //vinculo via onChange con el setState
+        </TextField>
+    )
+}
+
+3) El this. hace referencia a "esta clase" osea a este componente. Si el componente tiene props seria this.props.name
+
+
+*********************************************************************************************************************
+
+
+C)                               COMPONENTE CONTROLADO Y SIN CONTROLAR
+
+Controlled component no es solo aquel q tiene un useState sino q ademas ese estado debe estar definido:
+
+const [state, setState] = useState ("algo")
+
+Uncontrolled: 
+
+const [state, setState] = useState ()
+
+WARNING: A component is changing a controlled input to be uncontrolled. This is likely caused by the value changing from a defined to undefined, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. 
+
+Este error me salio cuando quice usar el setState en onBlur con un componente controllado nose porq 
+
+
+*********************************************************************************************************************
+
+
+D)                                              <STEPPER />
+
+Estructura:
+
+1) Primero declaramos al componente segun las indicaciones de MUI en un archivo aparte y lo exportamos:
+
+    import React from "react";
+    import { Stepper, Step, StepLabel } from "@mui/material";
+
+    const StepperComponent = (props) => {
+
+    const steps = ["Datos de usuario", "Datos personales", "Datos de entrega"];
+
+    return (
+        <>
+        <Stepper activeStep={props.step}> 
+            {steps.map((step) => (
+            <Step key={step}>
+                <StepLabel>{step}</StepLabel>
+            </Step>
+            ))}
+        </Stepper>
+        </>
+        );
+    };
+
+    export default StepperComponent;
+
+.) Es una estructura de 3 coponentes : <Stepper></Stepper> como etiqueta padre envolviendo todo, <Step></Step> es el paso en si, y <StepLabel /> el nombre q recibe el paso
+
+.) Es necesario un array con los nombres de los pasos es decir el value de los StepLabel s
+
+.) Stepper recibe como prop "activeStep={}" para inicializar la estructura, por default va en "0" pero la idea es hacerlo dinamico via props con lo cual en lugar de 0 se utiliza props.step, las cuales le vamos a pasar mas adelante.
+Luego se recorre el array de pasos con .map q por cada uno va a retornar cada Step con su key 
+
+
+2) En el compo q mandemos a llamar al Stepper, en este caso en un Form, vamos a necesitar dos cosas: un useState para los componentes q representa el Stepper, y el objeto con dichos componentes:
+
+.)estado:
+
+    const [step, setStep]= useState (0)
+
+.)objeto:
+
+    const steps = {
+        0: <DatosUsuario />,    //paso 0
+        1: <DatosPersonales />, //paso 1
+        2: <DatosEntrega />,    //paso 2
+        3: <Complete />         //componente final
+    }
+
+3) Ahora hacemos dinamico el contador de step usando la setStep del hook:
+
+a) definimos la fcuntion:
+
+    const updateStep (step)=>{
+        setStep (step)
+    }
+
+b) y se la pasamos a los componetes q representa cada step via props:
+
+    const steps = {
+        0: <DatosUsuario updateStep={updateStep} />,   
+        1: <DatosPersonales updateStep={updateStep} />,
+        2: <DatosEntrega updateStep={updateStep} />,   
+        3: <Complete />        
+    }
+
+c) por ultimo en el onSubmit de cada componente hacemos la call de updateStep
+
+    const DatosPersonales = ({updateStep}) => {
+        return (
+            <Box
+            component="form"
+            autocomplete="off"
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+            }}
+
+            onSubmit={(e)=>{
+                e.preventDefault()
+                if(name.valid, lastName.valid, number.valid){
+                console.log ("Datos personales esta todo ok")
+                
+                updateStep(2)   // aca la llamamos y le definimos hardcodeado el paso/step de cada componente
+
+                }else{
+                console.log("omar ")
+                }
+            }}
+            >
+        )
+    }
+
+4) Finalmente para el return del Form:
+
+    return( <>
+
+        <FormSpace>
+        {(step<3) && <Stepper step={step} />} 
+        {steps[step]} 
+      </FormSpace>
+
+      </>
+    )
+
+.)Call del Stepper: El Stepper y el steps tienen como indice el step del useState, entonces se le hace un ternario para q el Stepper no aparezca cuando steps llama a Complete, osea cuando steps[3]
+
+.)Call del objeto steps: Este call del objeto steps con el indice [step] del useState ni idea, osea se lo saco de la galera
+
+.)Con la llmada del setStep en cada onSubmit/button de los inputs/componenets (paso 3) tambn se va a actualizar el render de los steps en el return 
+
+*********************************************************************************************************************
+
+E)                                                    &&
+
+Es un ternario tal cual pero sin la parte del "sino".
+
+si esto es true     entonces ejecuta      lo de la derecha  
+
+    (step<2)              &&            <Stepper step={step} />
+
+.) Para validaciones sencillas tambn se puede meter un operador ternario:
+
+    export const validarLastName = (lastName)=>{
+        const length = lastName.length
+        return (length < 3 && length > 30) ? true : false
+    }
+
+
+*********************************************************************************************************************
+
+
+F)                                       VALIDACIONES DE INPUTS
+
+1) En un archivo aparte se crean las funciones de validacion. Si son sencillas se pueden ejecutar con un ternario (ejemplo de arriba):
+
+    export const validarLastName = (lastName)=>{
+        const length = lastName.length
+        return (length < 3 && length > 30) ? true : false
+    }
+
+2) Se exportan al input a utilizar y se conectan con dos instancias. Un hook useState para tener un controlled component y con las siguientes props del mismo input: value, error, helperText, onChange/onBlur
+
+a) import {validarLastName} from ...
+
+b) Hook:
+
+    const [lastName, setLastName] = useState ({ value:"" , valid: null })
+
+c) Props:
+
+    <TextField
+
+        value={lastName.value}
+        error={lastName.valid === false}
+        helperText={name.valid === false && "Al menos 3 caracteres"}
+        onChange={(e)=>{
+          const lastName = e.target.value
+          const validacion = validarLastName(lastName) 
+          setLastName ({value: lastName, valid: validacion})
+        }}
+
+      /> 
+
+    .) value={} aca conectamos el estado para controllar al input
+
+    .) error={} esta prop devuelve un booleano, por defecto da "false". No explica y tampoco encontre como funciona esta validacion. Asiq para q funciona y salte el "error" el .valid del hook debe inicializar como "null" y la function q valide el string del input debe retornar un booleano.
+
+    .) helperText={} aca usa la misma logica q error, pero se le agrega el condicional && para el text
+
+    .) onChange={} cada q se produzca un cambio en el input, ya sea pickear y despickear o modificarlo con strings, manda a llamar el setLastName actualizando en tiempo real el objeto del hook con sus dos valores: value y valid, pero a valid se le pone el filtro de la funcion de validar la cual devuelve un boolean. 
+        Ademas se destructura e.target.value y la function validar para q quede mas limpia la setState()
+
+
+
+*********************************************************************************************************************
+
+
+G)                                      REFACTORIZANDO INPUTS
+
+
+                                            TEORIA GRAL
+
+.)                              Objeto de objetos con arrays: estructura 
+
+Objetos = {} llaves
+Arrays = [] corchetes
+
+    const objetoPadre = {
+        objetoHijo:{
+                array:[
+                    {
+                        dataElemento1: ""    //pares de clave: valor
+                        dataElemento1: ""
+                        dataElemento1: ""
+                        dataElemento1: ""
+                    },
+                    {
+                        dataElemento2: ""
+                        dataElemento2: ""
+                        dataElemento2: ""
+                        dataElemento2: ""
+                    },
+                ]
+        },
+    }
+
+al objetoHijo tambn le llama por llave 1 "{}"
+
+.) Como ingresar a este objeto?: 
+
+    objetoPadre[objetoHijo].array[0].dataElemento1
+
+    stepsFlow[0].inputs[0].label (este es del objeto del proyeto)
+
+
+
+
+.)                                           MAP
+
+.) inputs.map((input, i)=>{
+
+})
+
+.) map: para cada elemento o propiedad q contenga el array u objeto ejecuta lo siguiente.
+
+.) los parametros q recibe .map() son dos: 
+
+    El primero en este caso "input" contiene el valor actual de cada propiedad (objeto) o elemento (array) 
+    El segundo es "i" o algun id para conocer en q posicion actual del elemento del array nos encontramos
+
+
+
+
+.)                            CORRECTO MOUNTING DE COMPONENTES PARA FORM
+
+
+.) CODIGO DENTRO DEL COMPONENTE FORM
+
+La idea es montar los componentes de manera dinamica y reutilizanco codigo
+
+1) Se crea un objeto con las props q SI van a combiar de input a input, por convencion se llama flujo de pasos, flowSteps:
+
+
+const flowSteps = {
+    0:{
+        input:[
+            {
+                label: "nombre del input",
+                type: "tipo del input, text, email",
+                value: "",
+                valid: null,
+                helperText: "texto alucivo al error",
+                onChange: functionParaManejarOnchange,
+                validator: functionParaManejarVlidacion,
+            },
+            {
+                label: "nombre del input",
+                type: "tipo del input, text, email",
+                value: "",
+                valid: null,
+                helperText: "texto alucivo al error",
+                onChange: functionParaManejarOnchange,
+                validator: functionParaManejarVlidacion,
+            },
+        ],
+        buttonText,
+        onSubmit, 
+    },
+    1:{
+        input:[
+            {
+                label: "nombre del input",
+                type: "tipo del input, text, email",
+                value: "",
+                valid: null,
+                helperText: "texto alucivo al error",
+                onChange: functionParaManejarOnchange,
+                validator: functionParaManejarVlidacion,
+            },
+        ],
+        buttonText,
+        onSubmit,
+        algunOtroElementoQTengaElInput,
+    },
+}
+
+
+.) Este objeto por lo general se obtiene de una API no se hardcodea asi
+
+
+2) Declaramos el useState q haga de contador para el stepper:
+
+    const [step, setStep]= useState (0) 
+
+
+3) Se declaran las respectivas functions q manejen 3 cosas basicas de cada form: el onSubmit, el onChange, y las validaciones
+
+    a) onSubmit:
+
+        const onSubmit = () => {
+            let newStep = step + 1;
+            setStep(newStep);
+    }
+
+    .) de esta manera al darle al button "siguiente" de cada Step (cada componente del form) va a actualizar el numero del step y nos va a pasar al suigiente componente
+
+
+    b) onChange: 
+
+        const handleChange = (element, position, currentStep, validator) => {
+
+            const value = (element.target.value)
+            const valid = validator (value)
+
+            console.log("value: ", value)
+            console.log("posicion array inputs: ", position)
+            console.log("step actual: ", currentStep)
+            console.log("validacion: ", valid)
+    }
+
+    .) Esta es la function encargada de ejecutarse en el onChange, desde el componente <Step /> (el q va a ir generadno los difernetes inputs) va a recibir por props 4 parametros:
+
+        }element: es el objeto q retorna el metodo onChange, por eso se destructura en element.target.value, podria ser "e" o "input".
+
+        }position: es la "i" del .map() desde <Step /> la cual indica en q posicion se encuentra iterando el array, seria stepsFlow[0].inputs[i] esa i.
+
+        }currentStep: la referencia del contador para el stepper
+
+        }validator: le manda la fucntion de validacion q declaramos
+
+
+    c) Validaciones: por convencion a y b van dentro del componente form y las validaciones en un js aparte
+
+        }validacion basica:
+
+        export const validarInput = (input) => {
+            const length = input.length
+            return length < 3 && length > 20 ? true : false
+        }
+
+
+4) Return: 
+
+.) Para el return del componente, recordando q los componentes para el form van envueltos de manera jerarquica, la estructura es la siguiente:
+
+    <FormSpace>
+    a)    {step < 3 && <Stepper step={step} /> }
+    b)    <Step data={stepsFlow[step]} step={step} />
+    </FormSpace>
+
+a) <Stepper />: se hace un ternario para el componente del stepper, el cual representa solo a 3 de los 4 componentes, y de esta manera no se renderiza para el 4to y ultimo q seria el de <Complete />
+
+b) <Step />: esta es la llamda del componete "generico" (q aun no definimos ) q va a representar a nuestros inputs, recibe 2 parametros:  
+    
+    .) data = el flujo de pasos (stepsFlow) con el contador [step] inicializado en "0" y q se suma con el onSubmit.
+    .) step = el contador en si 
+
+
+
+
+
+.)                                              <Step />
+
+Este va a ser el template general de nuestros inputs. Se define en un js aparte y va a ir recibiendo por props todas las caracteristicas y funciones distintivas de cada input.
+
+a) Props:
+
+const Step = ({ data, step }) => {
+
+)    const [inputs, buttonText, onSubmit] = data
+
+}
+
+.) destructuramos data (el objeto con los elementos para nustros inputs) y step queda tal cual (contador)
+
+
+b)Return: la primera parte un <Box />, o el componente q represente a nuestro form
+
+return <Box
+        component="form"
+        autocomplete="off"
+        sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+        }}
+}        onSubmit={onSubmit}
+    >
+
+.) en onSubmit ya le pasamos 1 de los 3 elementos de data
+
+
+c) Map: aca vamos a usar un segudno elemento de data, iterando al array "inputs". Map recibe como primer parametro el valor actual del elemento (param1 input) y como segundo la posicion actal de ese elemento (param2 i)
+
+{
+    inputs.map((input, i)=>{
+
+1]        const {label, type, helperText, valid, value, onChange, validator } = input
+
+2]        return (
+                    <TextField
+                        key={i}
+                        label={label}
+                        variant="outlined"
+                        fullWidth
+                        margin="dense"
+                        type={type}
+                        error={valid === false}
+                        helperText={valid === false && { helperText }}
+                        value={value}
+                        onChange={(e)=>onChange(e, i, step, validator)}
+                    />
+                )
+    })
+}
+
+    <Button variant="contained" type="submit">
+3]            {buttonText}
+    </Button>
+
+
+1]: destructuramos las propiedades del elemento en = input. Va entre {llaves} porq es un objeto.
+
+2]: hacemos q el return del map sea el equeleto de un TextField y vamos insertadno en cada prop las propiedades del objeto q van a ser unicas de cada input y las otras las hardcodeamos como el fullWidth por ej.
+
+3]: Por ultimo utilizamos el elemento 3 de 3 de data
+
+
+
+*********************************************************************************************************************
+
+
+H)                                            USSEEFFECT
+
+
+    useEffect(()=>{
+
+    }, [])
+
+
+1) Definicion: se encarga de alterar el ciclo de vida del componente. Lo q en los compos de classe hacian componentDidMount() y componentDidUpdate()
+
+2) Ciclo de vida: son 3 independeientemente si es de classe o functional
+
+    Mounting:
+
+        a) crear el compo
+        b) inicializar sus props y estado 
+        c) render en DOM
+
+    Updating: se produce cuando ocuren cambios en las props o el estado
+
+        a) se comprueba si el compo necesita actualizarse
+        b) de ser asi, se vuelve a inicializar sus props y estado 
+        c) render en DOM
+
+    Unmounting: 
+
+        a) delete del DOM
+
+3) Usabilidad: Es una especie de addEvenListener y de onChange. Se ejecuta cuando se renderiza todo el componente, al final de todo, o cuando exista un cambio.
+
+    a) Como una function normal pero con su call o trigger al momento de q se carga todo el componente
+
+    b) Como "efecto secundario" de algun objeto, array o state al momento de q sufra una modificacion, como un onChange. Recibe dos parametros: el primero es una fucntion y el segundo es un array, q puede o no usarse.
+
+    useEffect(()=>{
+
+    }, [])
+
+    .) el array hace de listener, ahi podemos poner un estado por ejemplo y cada vez q su setState se ejecute y lo actualice el useEffect va a ajecutar su function. Es como un complemento a los useStates para agregarle una function. Se usa asi ya q los useEffects son asincronos, entonces la fucntion q anida el setState debe salir de su ciclo para poder interactuar con el state ya actualizado.
+
+    c) Para hacer fetchs a APIs:
+
+    useEffect( async ()=>{
+        try {
+            const data = await (await fetch ("http://urlDeLaAPI/endPoint")).json();
+            //codigo a ejecutar
+        } catch (error){
+            //codigo a ejecutar o console.log (error)
+        }
+    })
+
+    .) En algunas versiones viejas es probable q no permita usar async directamente en el useEffect entonces se declara inetrenamente en otra function: async function getData(){}
+
+    useEffect (()=>{
+        async function getData() {
+        try {
+            const data = await (await fetch ("http://urlDeLaAPI/endPoint")).json();
+            //codigo a ejecutar
+        } catch (error){
+            //codigo a ejecutar o console.log (error)
+            }
+        }
+    })
+
+
+
+*********************************************************************************************************************
+
+
+I)                                          CONTEXT
+
+Libreria  de react q facilita el paso de datos de componente a componente, sin utilizar props manualmente en cada nivel. Genera una especie de super div, q podemos utilizar para envolver los componentes q queramos. Se pueden dividir por celulas o hacer un context global en el main index.js para envolver a <App />
+
+.) En este caso vamos a armar un simple contador q viaje por los componentes necesarios enviadno la informacion correspondiente.
+
+1) Estructura:
+
+Vamos a necesitar declarar 3 cosas:
+
+a) Crear un "context" en un archivo separado, "counterContext" en este caso:
+
+    import {createContext} from "react"  //destructurado
+    const counterContext = createContext (algunValorInicial)
+
+b) Tener un componente "provider" q tenga disponible la data q necesitamos (mismo archivo donde declaramos el context):
+
+    import {createContext} from "react";
+
+    const counterContext = createContext ()
+
+    export const CounterProvider = ({ children }) =>{
+
+        const [count, setCount] = useState(0)
+
+        const contextValue = {count}
+
+        return (
+            <counterContext.Provider value={{ contextValue }}>
+                {children}
+        </counterContext.Provider>);
+    }
+
+.) Children hace refernecia a todos los componentes q va a envolver el provider, los cuales esta habilitados a acceder a la data de context
+
+.) La manera q tenemos de conectar nuestro context con el provider es atraves del return. La sintaxis es:
+    <nombreDelContext.Provider> 
+
+El cual va a contener a los childrens y va a recibir un value, q puede ser tanto el inicialValue del createContext()
+o bien utilizar un useState para poder controllarlo. 
+
+c) Para poder controlar el value, se declara un useState y un objeto q contenga el estado y las difernts functiones q manejen su setEstado. Luego se lo conecta por props en el ruturn. 
+
+    const [count, setCount] = useState(0)
+
+        const contextValue = {
+            count,          // lo mismo q decir count: count,
+            suma () {
+                setCount ((count)=> count + 1)      // aca el parametro puede ser count o cualquier cosa, value, numb
+                },
+            resta () {
+                setCount((val)=> val - 1)
+                },
+            }
+
+
+
+d) Usar dicho context con "useContext", en el componente q necesita la data (ya sea un compo hno o hijo):
+
+    const contextData = useContext(counterContext)
+
+
+Entonces
+.) "context" es un objeto con informacion con acceso a todos los niveles.
+.) "useContext" es la manera de acceder al context desde cualquier nivel
+.) "provider" va a ser el portador del context y solo a los childrens q envuelva tendran acceso al objeto
+
+
+
+*********************************************************************************************************************
+
+J)                                      JWT - JASON WEB TOKEN
+
+un cifrado para manejar data de usuarios, si estan online, si se registraron e ingresaron etc.
+
+https://jwt.io/  
+
+https://es.wikipedia.org/wiki/JSON_Web_Token
+
+
+*********************************************************************************************************************
+
+
+K)                                           CUSTOM HOOKS
+
+Los custom hooks son functiones q contienen algun tiopo de hook, en su mayoria useStates pero q ejecutan cierto comportamienteo para el setState por ejemplo. Podes definir los customs hooks q se te canten.
+
+Repositorio git con banda de custom hooks y su documentacion (claves): 
+
+Repo: https://github.com/streamich/react-use
+Pag: https://streamich.github.io/react-use/?path=/story/components-usekey--demo
+
+
+*********************************************************************************************************************
+
+
+L)                                          FORMS LIBRERIAS
+
+Componentes enteros de forms: 
+
+1) https://formik.org/  (tiene un apartado para laburar con MUI)
+2) https://react-hook-form.com/ 
+3) https://www.npmjs.com/package/yup
+
+
+*********************************************************************************************************************
+
+
+M)                                 REDUX, MOBX, RECOILJS (LIBRERIA DE MANEJO DE DATOS)
+
+Alternativa a context, trabaja con mas lenguajes (redux).
+
+1) https://es.redux.js.org/
+2) https://redux.js.org/redux-toolkit/overview
+3) https://mobx.js.org/react-integration.html
+4) https://recoiljs.org/

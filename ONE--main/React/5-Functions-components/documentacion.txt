@@ -1,0 +1,446 @@
+                                        INDICE DEL CURSO
+A) TERMINAL
+B) COMPONENTES FUNCIONALES VS DE CLASE
+C) && RENDERIZADO CONDICIONAL
+D) FRAGMENTS
+E) LIBRERRA DE ESTILOS MUI, ANT.
+F) MATERIAL UI SINTAXIS
+G) LOGICA DEL FORM
+  H) CAPTURANDO INPUTS VALUES/FORM
+  I) HANDLE SUBMIT/FORM
+J) USEEFFECT
+K) HOOKS GENERALIDADES
+L) VALIDACION DE INPUTS EN MUI
+M) LIBRERIAS REACT DE VALIDACIONES
+
+*********************************************************************************************************************
+
+A)                                          TERMINAL
+
+Por cada proyecto React q vayamos a encarar es necesario nuestra carpeta main "nombre-del-proyecto", abrir dicha carpeta en la terminal y teniendo el node.js (node -v para ver si esta installado) ejecutar "npx create-react-app nombre-del-proyecto" npx es para q te cree la ultima version, sino npm. Con esto te crea la estructura base, las carpetas /src /public los node-modules, los App.js etc. Por ultimo levantas el proyecto con npm start
+
+
+*********************************************************************************************************************
+
+B)                              COMPONENTES FUNCIONALES VS DE CLASE
+
+            COMPONENTES DE CLASE / CLASS COMPONENTS
+
+1) Se llama de clase por es necesario importarle las funciones y propiedades de React.components a nuestros componentes de clase ejecutando su debida sintaxis: 
+
+class MiCompo extends React.Component { //extends para heredar react.components
+  constructor(props) { //guarda las porps de react.componentes
+    super(props); // inicializa dichas props para MiCompo
+    this.name = props.name; //accede a las props
+  }
+}
+
+Una herramienta basica para los de classe es q para acceder a los componentes q definimos necesitamos el metodo "this". En el ejemplo anterior a this la destructuramos para acceder al name de prop (ya definido). En el siguiente ejemplo vamos a acceder a una prop definida por nosotros:
+
+class MiCompo extends React.Component {
+  state = { //definimos "name" dentro del array state
+    name: 'John Doe',
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>Hello, {this.state.name}</h1>
+      </div>
+    );
+  }
+}
+
+2) Usa state para los estados con su debida sintaxis
+
+3) Lo mismo para los metodos de ciclo de vida
+
+
+            COMPONENTES FUNCIONALES / FUNCTION COMPONENTS
+
+1) Son funcionales porq recibe las caracteristicas de React.component pero a traves de un objeto como parametro y ejecuta/devuelve/retorna un elemento React (drectamente son funciones) por eso esta sintaxis:
+
+function App() {
+  return (
+    <div className="App">
+
+    </div>
+  );
+}
+
+export default App;
+
+2) Usa hooks para los estados (useState) y para los ciclos de vida 
+
+En difinitiva son mas concisos y faciles de mantener q los de clase, pero son menos flexibles. (tengo hasta ahi pa)
+
+
+*********************************************************************************************************************
+
+C)                                    && RENDERIZADO CONDICIONAL
+
+La sentencia && en React se utiliza para realizar el renderizado condicional. Es una forma de mostrar o ocultar un elemento de la interfaz de usuario, dependiendo de una condición.
+
+La sentencia && funciona de la siguiente manera:
+
+a)Se evalúa la condición.
+b)Si la condición es verdadera, se renderiza el elemento que está después del operador &&.
+c)Si la condición es falsa, no se renderiza el elemento.
+
+1) Se declara un useState booleano a modo de switch con su setFunction actualizando con un ! (valor distinto)
+
+  const [on, setOn]= useState(true)
+  const mostrarCompo = ()=>{
+    setOn(!on)
+  }
+
+2) Se crea en un componente aparte un button o section o div q haga de switch y reciba via props el booleano
+
+  const HiddenCompo = (props)=>{
+    return <BtnHidden src="" alt="boton" onClick={props.mostrarCompo} />
+}
+
+
+3) en App.js se declara el renderizado condicional (&&)
+
+  return (
+
+    <div className="App">
+
+     { on && <CompoConteiner /> }
+     <HiddenCompo mostrarCompo={mostrarCompo} />
+
+    </div>
+  );
+
+
+*********************************************************************************************************************
+
+
+D)                                            FRAGMENTS
+
+React siempre pide a la hora del return q solo exista un componente padre (un div, section, etc q envuelva todo), pero para no estar generadno tantos divs lo q se usa son fragments: "<></>"
+
+<>
+  <tags></tags>
+  <tags></tags>
+  <tags></tags>
+</>
+
+
+*********************************************************************************************************************
+
+
+E)                                      LIBRERRA DE ESTILOS
+
+Dos librerias de estilos base para react. Basicamente para importar componentes enteros desde buttons, containers (divs y sections), menus enteros, formatos de playlists, forms, barritas de rango, tipos de calendarios, etc. 
+Cada una tiene sus propias sintaxis. (esto es cuando dicen q te sepas un par de librerias, conocer sus modos), basicamente difierne en la manera de enviar las props.
+Buscas un componenete, le das a expandir codigo y te da el ejemplo de usabilidad, imports, como se manejan las props, los onCLicks, etc. Ojo a la difenrecia entr Class components y Functionals
+
+1) MUI: MATERIAL UI 
+
+mui.com 
+
+Install: npm install @mui/material @emotion/react @emotion/styled 
+
+2) ANT DESIGN
+
+3) CHAKRA UI
+
+4) REACT BOOTSTRAP 
+  Bootstrap es la libreria baase de css solo. Esta labura con componentes de react
+
+
+*********************************************************************************************************************
+
+F)                                         MATERIAL UI SINTAXIS
+
+                                            } TextField
+
+1) Importamos el componente dede la pag ("expand code") 
+
+  import TextField from '@mui/material/TextField';
+  import {TextField} from '@mui/material'; // aca destructurado (todavianose q ventajas tiene)
+
+
+2) Lo insertamos 
+
+   <TextField
+        id="mail" 
+        label="Email" 
+        variant="outlined" 
+        fullWidth 
+        margin="normal"
+    />
+
+3) Todo lo de "adentro" son props, asi es como editamos los componentes. Todas las props posibles las encontramos en la parte de API del componente al final de la pag. Algunas API claves:
+
+  class: podemos añadir una class de CSS
+  component: le mandamos un componente o una tag html tal cual a la hora de renderizar
+
+
+
+                                          } Container 
+                                        
+1) Buena practica agregarle la prop "component" para indicar q tipo de etiqueta html estamos utilizando
+
+  <Container component="section" maxWidth="sm">
+
+
+                                          } Swicth
+
+1) Los Switch (palancquitas de on off) para poder adjudicarles un label, es decir un nombre, es necesario envolverlos en un componente llamado FormGroup e invocar a los switch dentro del componente FormControlLabel via prop. Lestructura quedari asi:
+
+  <FormGroup>
+      <FormControlLabel 
+        control={<Switch defaultChecked />} 
+        label="Promociones" />
+  </FormGroup>
+
+                                        } Typografy
+                                      
+1) Se pega el link de la font en el index.html de public 
+2) Se importa Typografy en el component
+3) tamb se declara q tipo de tag estasmos usando
+
+<Typography 
+  variant='h3' 
+  align="center" 
+  component="h3"
+  >Formulario Registro // el texto del componnete
+</Typography>
+
+
+*********************************************************************************************************************
+
+G)                                      LOGICA DEL FORM
+
+
+
+
+H)                                  CAPTURANDO INPUTS VALUES
+
+1) Con un simple: 
+
+    onChange = {(e)={
+      console.log(e.target.value)
+    }}
+
+Ya podriamos capturar el contenido del input, pero esto es un componenet sin controlar, uncontrelled component. React sugiere utilizar componentes controlados, controlled components, mediante hooks, en este caso useState, si el componente tiene un estado asignado y su respectiva setEstado ya es un controlled component
+
+2) importamos useState
+
+3) Lo definimos:
+
+  const [name, setName] = useState("")
+
+4) Se lo insertamos via event y prop al input
+
+  <TextField 
+    onChange={(e)=>{
+        setName(e.target.value)
+        console.log(name)
+    }}
+    value={name}
+  />
+
+a) Los componentes y tags tienen la posibilidad de recibir eventos con la misma logica q las props. 
+  .) onClick: por cada click se ejecuta algo
+  .) onChange: por cada cambio
+  .) onSubmit: por cada enviar
+  .) focus: cada vez q nos apoyamos en el input
+
+b) Cuando damos en consolo.log (event), nos devuelve la function interna del evento y un arreglo con todos los datos q maneja. Es por eso q necesitamos entrar al array especificando lo q necesitamos en este caso "e.target.value"
+
+c) Con onChange={} lo q hacemos es mediante una arrow la cual reibe "e" del porpio event "onChange", llamar la setName() y pasarle el nuevo contenido de name con e.target.value
+
+d) con la prop value={} insertamos el estado "name" del useState 
+
+
+*********************************************************************************************************************
+
+
+I)                                           HANDLE SUBMIT
+
+1) Una vez capturamos los inputs values del form, debemos manejar esa informacion
+
+2) Almacenar. Por ahora la informacion paso del usuario a la pantalla y de la pantalla a nuestros inputs, ahora necsitmaos alojarla donde nosotros creamos conveniente (por lo general lo mejor es tener todos los datos en un solo lugar, como puede ser App.js) para ello necesitmaos desde App.js tener una funcion q recopile los datos de los inputs.
+
+a) Desde App.js: 
+
+  const handleSubmit = (variableQVaAAlmacenarLosValues)=>{
+    console.log (variableQVaAAlmacenarLosValues)
+  }
+
+b) Pasarle como props la function handleSubmit al componente de nuestro :
+
+  <Form handleSubmit={handleSubmit}/>
+
+c) En nuestro componente Form debemos indicar q le vasmoa a pasar esas props: 
+
+.)  function FormSignUp ({handleSubmit}){ 
+    return <>
+          <form>
+          
+          <form/> 
+  }
+
+lo de arriba es lo mismo q decir esto:
+
+.)  function FormSignUp (props){ 
+
+    const {handleSubmit} = props
+
+    return <>
+          <form>
+          
+          <form/> 
+  }
+
+d) Por ultimo definimos el call de handleSubmit via algun evento, comunmente onSubmit:
+
+  return <>
+        <form onSubmit={(e)=>{
+            e.preventDefault()
+            handleSubmit({ // de esta manera
+                name,
+                lastName,
+                email,
+                prom,
+                nov
+        })}}>
+
+
+*********************************************************************************************************************
+
+J)                                          USEEFFECT
+
+useEffect se usa basicamente para, pedidos http y vincular efectos secundarios a estados.
+
+1) estructura:
+
+  useEffect(()=>{
+
+  }, [estadoYaDefinido])
+
+2) Tiene la particularidad de estar "escuchando" al estado (en forma de arreglo) q lleva al final [esto], llamado dependecia, y ejecuta el codigo q le pongamos cada vez q ese estado cambia o se renderiza. Si la dependecia la dejamos vacia [] solo se va a ejecutar cuando se renderice, dentro de otra function pero fuera del return.
+
+  function App() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    // Este efecto se ejecuta cuando el componente se monta o actualiza.
+    // Realiza una petición HTTP para obtener el número actual de usuarios.
+    fetch('https://api.github.com/users')
+      .then(response => response.json())
+      .then(users => {
+        setCount(users.length);
+      });
+  }, []);
+
+  return (
+    <div>
+      <h1>Usuarios: {count}</h1>
+    </div>
+      );
+}
+
+
+Es una especie de addEventListener (para el estado) y un onChange (para ejecutar codigo)
+
+
+*********************************************************************************************************************
+
+
+K)                                      HOOKS GENERALIDADES
+
+1) El useState es asincrono, si lo haces hablar con un console.log va un paso atras.
+
+2) Los hooks no pueden ser utilizados en:
+
+  a) Loops: for, forEach, while.
+  b) Condicionales: if, elseif.
+  c) Funciones anidadas: es decir tienen q estar solo en componentes de react. Estructura basica de un componenete react es q empiece con mayuscula "const ComponenteReact", y q returne algo, ya sea un fragment
+
+
+*********************************************************************************************************************
+
+
+L)                                   LOGICA VALIDACION DE INPUTS EN MUI
+
+MUI tiene dos props para manejar los errores: error (boleano) y helperText (un placehoder).
+
+1) Definimos un useState con un array de los distintos errores y mensajes (helperTexts) q puede haber por input:
+
+  function Form ({handleSubmit}){
+
+       const [errors, setErrors] = useState({
+        name: {
+            error: false,
+            message: "Al menos 3 caracteres",
+        }
+    })
+  
+  return <form onSubmit>
+
+        </form>
+
+  }
+
+2) Conectamos el state a las props de validacrion del componente MUI:
+
+  <TextField 
+                props
+                props
+                props
+                props
+                error={errors.name.error}
+                helperText={errors.name.error ? errors.name.message : ""}
+            />
+
+.) error={} recibe el booleano del array name
+
+.) helperText={} lo definimos con un ternario para q solo aparezca cuando error es true
+
+3) Por ultimo necesitmaos q el booleano de "error" sea dinamico y se actualice en caso de error: 
+(Para esta parte vamo a hacer una validation muy rustica y sencilla de manera manual pero para esto hay librerias q facilitan el codigo y no se chocan con ninguna libreria visual MUI, ANT Design etc)
+
+a) Function. Esta podria estar en un archivo aparte y la importas, sino la definis directamente en el componente antes del return con los hooks y eso
+
+  const validarName = (nombre)=>{
+          if(nombre.length >= 3){
+              return { name: {error: false, message: ""} }
+          }else return { name: {error: true, message: "Al menos 3 caracteres pa"} }
+      }
+
+.) la variable "nombre" va a ser el e.target.value del evento q haga la call de validarName
+.) ambos return simulan el mismo objeto del array con los errores para poder sustituirlos con el setErrors
+
+b) Conecatmos la function con el input (hacemos la call)
+
+  <TextField 
+                props
+                props
+                props
+                props
+                error={errors.name.error}
+                helperText={errors.name.error ? errors.name.message : ""}
+                onBlur={(e)=>{
+                    setErrors(validarName(e.target.value))
+                  }
+                }
+            />
+
+.) en este caso nos servimos del evento onBlur para q haga la call cada vez q el usuario pickea el input y se sale
+.) hacemos la call de setErrors y le pasamos como parametro la function validarName q a su vez recibe el e.target.value
+
+
+*********************************************************************************************************************
+
+
+M)                            LIBRERIAS REACT DE VALIDACIONES
+
+Son independientes de cualquier libreria de UI
+
+1) https://react-hook-form.com/
+2) https://www.npmjs.com/package/yup

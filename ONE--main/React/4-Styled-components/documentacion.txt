@@ -1,0 +1,246 @@
+                                        INDICE DEL CURSO
+A) TERMINAL
+B) SINTAXIS
+C) GLOBAL STYLE / RESET.CSS
+D) FUENTES EXTERNAS (GOOGLE FONTS)
+E) VARIABLES STYLE
+F) PROPS
+G) HERENCIA DE ESTILOS
+H) @MEDIA QUERYS
+I) THEME PROVIDER
+
+****************************************************************************************************************
+
+                                        STYLED COMPONENTS
+
+        CONCEPTO
+
+La idea central es no definir manualmente las classes de css, sino q esta libreria va generadno classes de manera interna por cada tag asi no te pisas en proyectos grandes definiendo calses. Ademas de no necesitar un archivo CSS por cada estilo sino q se definen en cada component y usando menos codigo por compo. Lo q se obtiene es un componente estilizado
+
+Se instalo la extension en el VSC de "styled" q te autocompleta la estructura y reconoce la sintaxis de styled components
+
+A)                                          TERMINAL
+
+1)  NPM
+La carpeta inicial del curso no tenia los node modules (carpeta "node_modules" osea el "node", el npm ("node package manager")), en el curso el loco harland usa "yarn" q es otro cliente de modulos como el npm. Entoces cuando quise levantar el proyecto con "npm start" me daba error en la consola. La cosa es q al parecer el npm no se instala de manera global y hay q hacerlo por cada proyecto (carptea main), abrir la terminal y ejecutar el comando "npm install"
+
+2) STYLED COMPONENTS INSTALL 
+Es una libreria q combina el css con codigo. Para instalarla te vas a la pagina oficial https://styled-components.com/ y te da la instruccion para la terminal la cual es: "npm install styled-components"
+
+
+****************************************************************************************************************
+
+
+B)                                          SINTAXIS
+
+1) Componente de una sola tag
+
+Se importa en cada component):
+
+import styled from "styled-components"
+
+Estructura):
+
+const Title = styled.h1`
+  color: grey;
+  padding: 25px 0;
+`
+Esto define todo el componente, sin necesidad de un const=function{ return bal bla }
+
+2) Para un component con varias tags, ponele un header completo la estructura es la suigiente
+
+Se define la tag igual q en 1) y se llama dentro del return de la function:
+
+const Header ()=>{
+    
+    return(
+        <Title><Title/>
+    )
+
+}
+
+Le podes mandar props igual q cualquier componente
+
+****************************************************************************************************************
+
+
+C)                                          GLOBAL STYLE
+
+Para aplicar el estilo global de css es decir * { } para llegar a todas las etiquetas a modod de reset.css, con la libreria se aplica como si fuese un componente aparte y tiene la misma logica 
+
+En un archivo js q se guarda en /src, al mismo nivel q App.js y se importa la siguiente funcion):
+
+import { createGlobalStyle } from "styled-components";
+
+Estrcutura):
+
+const GlobalStyle = createGlobalStyle`
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: grey;
+}
+`;
+
+export default GlobalStyle;
+
+Export):
+
+ahora en App.js lo importmaos y lo renderizamos como un componente mas en el return principal digamos, al mismo nivel de Header y asi
+
+
+****************************************************************************************************************
+
+D)                                      FUENTES EXTERNAS
+
+Para utilizar fuentes, directamente se importan a la old school en el head del index.html de la carpeta public
+
+
+****************************************************************************************************************
+
+E)                                      VARIABLES STYLE
+
+1) Se crea una carpeta aparte en este caso "UI" dentro de componentes y va un "variables.js"
+2) Definimos los const con los colores y el nombre: 
+    export const colorPrimario = "#41d3be" 
+3) Importamos donde vamos a aplicar 
+    import { colorPrimario } from "../UI/variables"; 
+se coloca entre llaves porq el export no se hizo con default
+4) Se inserta en el style component q estemos definiendo como codigo js
+    background-color: ${colorPrimario};
+
+De esta manera si tenes q cambiar todo los colores tocas en un solo lugar. Ademas los components q se repitan durante todo el proyecto se crea un index.js en esta carpeta y se definen ahi ya con un export:
+
+    export const Btn = 
+
+Y ya solo queda importarlos en los demas componentes:
+
+    import { Btn, IconoPadre, Etc, Etc } from "../UI";
+
+
+****************************************************************************************************************
+
+
+F)                                          PROPS
+
+En este caso la prop se utilizo como un identificador entre dos btns, uno primario y otro secundario, los cuales tenian el mismo estilo solo q variaban en dos lineas.
+
+Lo q se hizo fue difinirlos con el mismo componente pero mediante props se identifico a uno de ellos como "primary". De esta fomra en la creacion del styled se programo el color con una arrow y un ternario (ternario: si la sentencia d ela izq se cumple, ? ejecuta lo siguiete, sino : ejecuta esto)
+
+En el styled):
+
+const BtnHeader = styled.a`
+    color: ${(props)=> props.primary ? "white" : colorPrimario};
+`
+
+En la llamada del componente):
+
+<BtnHeader primary 
+    
+</BtnHeader>
+
+Ternario): 
+
+si la sentecnia es mas compleja se puede utilizar un ternario de la suigiente manera:
+
+color ${(props)=> props.primary === "activado" ? "white" : colorPrimario}
+
+
+<BtnHeader primary = {"activado"}
+    
+</BtnHeader>
+
+
+****************************************************************************************************************
+
+
+G)                                          HERENCIA DE ESTILOS
+
+Al momento de importar un componente estilizado a otro archivo, podemos retocarle las caracteristicas q necesitemos generadnole un hijo en el componente importado.
+
+1) Importamos el componente estilizado
+2) Importamos el styled (libreria) from "bla bla"
+3) Creamos la herecia: 
+
+Supngamos q el componente padre se llamaba IconoPadre, el hijo se define de la suigiente manera:
+
+const IconoHijo = styled(IconoPadre)`
+    definimos la nueva caracteristica
+`
+
+Ya podemos usar IconoHijo o IconoPadre segun sea necesario
+
+
+****************************************************************************************************************
+
+
+H)                                              @MEDIA QUERYS
+
+Los media querys se definene en el mismo styled component de la suigiente manera:
+
+export const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.04);
+  padding: 20px;
+  width: 48%;
+  
+  @media (max-width: 800px) {
+    width: 95%;
+    margin: 5px;
+  }
+`
+
+****************************************************************************************************************
+
+
+I)                                              THEME PROVIDER
+
+Function dentro de styled components para estilar varios componentes dentro de un "tema". Se crean los temas y con ThemeProvider (a modod de componente) se envuelve a los componentes q queramos afectar: 
+
+1) Crear temas: en archivo aparte
+
+export const temaClaro = {
+    body: fondoClaro,
+    inside: contenidoClaro,
+    text: textoFondoClaro
+}
+
+export const temaOscuro = {
+    body: fondoOscuro,
+    inside: contenidoOscuro,
+    text: textoFondoOscuro
+}
+
+2) Importar y aplicar temas: 
+
+Una vez "envuelto" los componentes, al ThemeProvider se le pasa via prop "theme" el tema 
+
+import { temaClaro, temaOscuro } from "./Components/UI/temas";
+import { ThemeProvider } from "styled-components";
+
+function App() {
+  return (
+    <ThemeProvider theme={ temaOscuro }>
+      <GlobalStyle />
+      <Header />
+      <Container />
+    </ThemeProvider>
+  );
+}
+
+3) Indicar en el styled de los componentes los estilos q van a ser afectados dependiendo el tema q este activo:
+
+Se destructura el tema enviado por props en los styleds y se los aplcia via arrow como variante
+
+const StyledContainer = styled.div`
+  background-color: ${ ({theme} )=>theme.body};  
+  min-height: 90vh;
+  padding: 0px 15vw;
+

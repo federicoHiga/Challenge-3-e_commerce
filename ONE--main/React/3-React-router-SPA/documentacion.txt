@@ -1,0 +1,135 @@
+                                        INDICE DEL CURSO
+A) REACT ROUTER DOM
+B) SPA 
+C) AXIOS/API REST
+D) ASYNC FUNCTIONS 
+E) HOOK USEEFFECT()
+F) HOOK USEPARAMS()
+G) HOOK USENAVIGATE()
+H) HOOK USERESOLVEDPATH
+                                        
+****************************************************************************************************************
+                                        
+                                        
+A)                                        REACT ROUTER DOM
+
+            TERMINAL
+
+1) lo primero q se hizo fue instalar algunas dependencias como algunos testings y el mismo react-router-dom todo con el comando "npm i" en la terminal de la carpeta main. Creando asi la carpeta node_modules. Comando solo para react router dom: npm install react-router-dom
+
+2) al laburar de manera local con json-server (fake REST API, simula la conexion entre el server backend y el front utilizando nuetro archivo db.json a modo de base de datos) hau q estar atento y levantarlo en una nueva terminal y q quede escuchando pero en un puerto distinto del q se levanto el react (npm start). Comando = json-server --watch .\db.json --port=5000
+
+            DEFINICION
+
+esta libreria segmenta el codigo en varias rutas (routes) pero siempre trabajado desde el mismo componente padre APP.js. Lo q hace es darle a cada componente hijo una route, manejado desde un solo "router" lo q genera q nuestra aplicacion sea SPA. Por defoult la url para pa pagina de inicio va a ser "/", de ahi en mas cada componente se va definiendo a gusto. La estructura es la siguiente:
+
+
+// Por definicion la estructura se llama BrowserRouter, pero se estila dejarlas de la siguiente manera:
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+
+
+function App() {
+  return (
+    <>
+      <Router> //enrutador, el router es el encargado de contener las routes pero ademas es quien puede recibir todo el codigo o components q van a compartir los hijos dentro de las routes
+        
+        <demasComponentesCompartidos />
+        <h1>Este title va a aparecer en todos los componentes hijos<h1/>
+
+        <Routes> //rutas
+          <Route path='/' element={<Home />}/> //ruta, q por medio de props le pasamos la direccion ("/") y el componente
+          <Route path='/Sobre' element={<Sobre />}/>
+          <Route path='*' element={<Page404 />} //este route con el path='*', hace de comodin para cuando ninguna route coincide, y le pasamos como element un componente de error404
+        </Routes>
+      
+      </Router>
+    </>
+  );
+}
+
+****************************************************************************************************************
+
+B)            SPA
+
+React trabaja con la idea de generar Single Page Application:
+
+    DEFINICION
+
+Una aplicación single page application hace apenas una requisición (un fetch) para el servidor, que regresa un archivo html (el unico archivo .html q tiene el proyecto en la carpeta public), y quien es responsable por exhibir el contenido son los componentes javascript. A difernecia de una aplicación tradicional q hace una requisición y recibe todo el archivo html de esa misma requisición, es decir un html por cada url.
+
+    APLICACION
+
+Para poder terminar de implementar la idea de SPA, es necesario cambiar las etiquetas "a" (etiqueta de link), ya q esta hace un pedido a algun servidor. React router tiene un componente para intercambiar llamado:
+<Link to="/"><Link/> . Y en lugar de un href utiliza "to"
+
+Ademas es necesario importarlo: import {Link} from "react-router-dom"
+
+****************************************************************************************************************
+
+C)          AXIOS
+
+libreria q hace peticiones http al server para buscar info. Ya se instalo o con react router o con el mismo react, asiq solo hay q importarlo:
+
+import axios from "axios"
+
+mas documentacion sobre axios, api rest y async fucntons en el archivo api/api.js 
+
+****************************************************************************************************************
+
+D)        HOOK USEEFFECT
+
+El Hook useEffect de React te permite realizar efectos secundarios en tus componentes. Los efectos secundarios mas comunes son:
+
+  .Obtener datos de una API (usamos este en "ListPosts" mediante la function "buscar" del "api.js")
+  .Actualizar el DOM
+  .Iniciar o detener un temporizado
+
+****************************************************************************************************************
+
+E)        HOOK USEPARAMS 
+
+Otra funcion interna de React la cual asocia los paths de <Link /> con identificadores (ids) de forma automatica.
+Mas q nada se usa para la pagina "detalle" de un endpoint en especifico
+Estructura:
+
+    (sintaxis al llamar el componente <Link />)
+<Route path='/Posts/:id' element={<Post />} />
+
+
+    (sintaxis en el componente)
+import { useParams } from "react-router-dom" //se importa
+
+const {id} = useParams() //se destrutura en el nombre q tengasmos de indentificadors, en este caso {id}
+
+useEffect(()=>{ //y mediante un useEffect hacemos el pedido pero especificando por ids
+        buscar(`/posts/${id}`, setPost)
+    }, [id])
+
+****************************************************************************************************************
+
+F)     HOOK USENAVIGATE
+
+Funcion interna de react para reedirecccionar, ya sea a otra url o a un componente.
+Estructura:
+
+  (sintaxis dentro del componente)
+import { useParams, useNavigate } from "react-router-dom" //importamos
+
+const navigate = useNavigate() //se declara de este modo
+
+const unaFunction ()=>{
+  navigate=("/unaUrl") //y se manda a llamar pero dentro de una funcion
+}
+
+****************************************************************************************************************
+
+H)    USERESOLVEDPATH
+
+funcion interna de react router para cuando usamos rutas anidadas, al estar en una ruta anidada necesitamos indicarle cual es ruta "padre" y esta funcion es para eso, indica la ruta actual por lo tanto se pueden ver las rutas anidadas. En este caso se utilizo para las subcategorias.
+Tambien es necesrio poder filtrar en la url entre los endpoints con la siguiente estructura: post?categoria=${id}
+
+const url=useResolvedPath("").pathname
+
+te tira la url actual? en donde estas?
+
+tengo q  volver a ver el ultimo modulo completo... los 3 videos tanqui

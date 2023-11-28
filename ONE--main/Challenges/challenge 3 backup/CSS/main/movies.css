@@ -1,0 +1,59 @@
+.movies{
+    margin-top: 30px;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.movies__title{
+    padding: 20px;
+    font-size: 40px;
+    font-weight: 700;
+    color: antiquewhite;
+}
+
+.ver_todo{
+    display: flex;
+    align-items: center;
+    position: relative;
+    left: 89%;
+    display: flex;
+    padding: 20px;
+    font-size: 25px;
+    color: #00B4CC;
+    width: 250px;
+}
+
+.movies__container{
+    display: flex;
+    justify-content: space-around;
+}
+
+.movies__box{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.movies__img{
+    height: 300px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.movies__names{
+    font-size: 30px;
+    color: antiquewhite;
+    margin-bottom: 10px;
+}
+
+.movies__price{
+    font-size: 20px;
+    color: antiquewhite;
+    margin-bottom: 10px;
+}
+
+.movies__box a{
+    font-size: 20px;
+    color: #00B4CC;
+    margin-bottom: 10px;
+}
